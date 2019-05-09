@@ -27,6 +27,6 @@
     "not dead"
   ],
   "files": [
-   "dist/*"
+    "dist/*"
   ]
 }

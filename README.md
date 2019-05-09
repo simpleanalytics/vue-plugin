@@ -10,7 +10,7 @@ npm install simple-analytics-vue
 
 ## Import in app
 
-Import the plugin and add it to `Vue.use`. You can add a `skip` option which will define when requests should be skipped.
+Import the plugin and add it to `Vue.use`. You can add a `skip` option which will define when page views should be skipped. This can be useful if you want to skip page views from yourself when developing your app.
 
 ```js
 import SimpleAnalytics from "simple-analytics-vue";
