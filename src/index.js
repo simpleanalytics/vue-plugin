@@ -1,7 +1,8 @@
 /* globals document */
 
 export default {
-  install() {
+  install(vue, { skip } = { skip: false }) {
+    if (skip) return console.warn('Simple Analytics: Not sending requests because skip is active.')
     if (!document) return;
     const el = document.createElement('script');
     el.type = 'text/javascript';
