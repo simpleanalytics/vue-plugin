@@ -1,5 +1,7 @@
 # Simple Analytics Vue plugin
 
+[Simple Analytics](https://simpleanalytics.com) is a clean, simple, and privacy friendly analytics tool. Actionable data in a beautiful dashboard. It does not use cookies and you can bypass ad blockers. Make sure to signup to get most value out of this plugin.
+
 ## Install
 
 Just run this command to install Simple Analytics for Vue:
