@@ -1,5 +1,5 @@
 /*!
- * simple-analytics-vue v1.0.2
+ * simple-analytics-vue v1.0.4
  * (c) 
  */
 'use strict';
