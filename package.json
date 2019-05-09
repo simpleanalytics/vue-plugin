@@ -1,16 +1,19 @@
 {
-  "name": "vue-plugin",
-  "version": "0.1.0",
-  "private": true,
+  "name": "simple-analytics-vue",
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "vue-cli-service serve ./src/index.js",
+    "build": "npx bili"
   },
+  "main": "./dist/index.cjs.js",
   "dependencies": {
     "vue": "^2.6.10"
   },
   "devDependencies": {
     "@vue/cli-service": "^3.7.0",
+    "bili": "^4.7.4",
+    "rollup-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.5.21"
   },
   "postcss": {
@@ -20,6 +23,10 @@
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions"
+    "last 2 versions",
+    "not dead"
+  ],
+  "files": [
+   "dist/*"
   ]
 }
