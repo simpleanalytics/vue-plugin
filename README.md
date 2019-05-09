@@ -1,29 +1,27 @@
-# vue-plugin
+# Simple Analytics Vue plugin
 
-## Project setup
-```
-npm install
-```
+## Install
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+Just run this command to install Simple Analytics for Vue:
+
+```bash
+npm install simple-analytics-vue
 ```
 
-### Compiles and minifies for production
-```
-npm run build
+## Import in app
+
+Import the plugin and add it to `Vue.use`. You can add a `skip` option which will define when requests should be skipped.
+
+```js
+import SimpleAnalytics from "simple-analytics-vue";
+import Vue from "vue";
+
+Vue.use(SimpleAnalytics, { skip: process.env.NODE_ENV !== 'production' });
 ```
 
-### Run your tests
-```
-npm run test
-```
+You can also pass a function or promise to `skip` which will be validated before injecting the Simple Analytics embed code:
 
-### Lints and fixes files
+```js
+import auth from "lib/auth";
+Vue.use(SimpleAnalytics, { skip: auth.isAdminPromise });
 ```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
