@@ -15,10 +15,12 @@ var warn = function warn(message) {
 
 var injectScript = function injectScript(domain) {
   if (!document) return warn('No document defined.');
-  var el = document.createElement('script');
+  var el = document.createElement('script'); // Uses hello.js for default domain, otherwise uses app.js
+
+  var file = domain === 'cdn.simpleanalytics.io' ? 'hello' : 'app';
   el.type = 'text/javascript';
   el.async = true;
-  el.src = 'https://' + domain + '/hello.js';
+  el.src = 'https://' + domain + '/' + file + '.js';
   document.head.appendChild(el);
 };
 
