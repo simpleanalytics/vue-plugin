@@ -18,7 +18,7 @@ Import the plugin and add it to `Vue.use`. You can add a `skip` option which wil
 import SimpleAnalytics from "simple-analytics-vue";
 import Vue from "vue";
 
-Vue.use(SimpleAnalytics, { skip: process.env.NODE_ENV !== 'production' });
+Vue.use(SimpleAnalytics, { skip: process.env.NODE_ENV !== "production" });
 ```
 
 You can also pass a function or promise to `skip` which will be validated before injecting the Simple Analytics embed code:
@@ -26,4 +26,10 @@ You can also pass a function or promise to `skip` which will be validated before
 ```js
 import auth from "lib/auth";
 Vue.use(SimpleAnalytics, { skip: auth.isAdminPromise });
+```
+
+You can also optionally specify a custom domain to bypass ad blockers. Read more about this in [our documentation](https://docs.simpleanalytics.com/bypass-ad-blockers).
+
+```js
+Vue.use(SimpleAnalytics, { domain: "api.example.com" });
 ```
