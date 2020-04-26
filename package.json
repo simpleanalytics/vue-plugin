@@ -1,6 +1,6 @@
 {
   "name": "simple-analytics-vue",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve ./src/index.js",
@@ -12,13 +12,13 @@
   },
   "main": "./dist/index.js",
   "dependencies": {
-    "vue": "^2.6.10"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/cli-service": "^3.7.0",
-    "bili": "^4.7.4",
-    "rollup-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "@vue/cli-service": "^4.3.1",
+    "bili": "^4.9.2",
+    "rollup-plugin-vue": "^5.1.6",
+    "vue-template-compiler": "^2.6.11"
   },
   "postcss": {
     "plugins": {
