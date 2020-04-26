@@ -1,36 +1,40 @@
 /* globals document */
 
-const isPromise = subject => subject && subject.then && typeof subject.then == 'function'
+const isPromise = (subject) =>
+  subject && subject.then && typeof subject.then == "function";
 
-const warn = message => {
-  if (console && console.warn) console.warn('Simple Analytics: ' + message || 'Something goes wrong.');
-}
+const warn = (message) => {
+  if (console && console.warn)
+    console.warn("Simple Analytics: " + message || "Something goes wrong.");
+};
 
 const injectScript = (domain) => {
-  if (!document) return warn('No document defined.');
-  const el = document.createElement('script');
-  // Uses hello.js for default domain, otherwise uses app.js
-  const file = (domain === 'cdn.simpleanalytics.io') ? 'hello' : 'app';
-  el.type = 'text/javascript';
+  if (typeof document === "undefined") return warn("No document defined.");
+  const el = document.createElement("script");
+  el.type = "text/javascript";
   el.async = true;
-  el.src = 'https://' + domain + '/' + file + '.js';
+  el.src = "https://" + domain + "/latest.js";
   document.head.appendChild(el);
-}
+};
 
 export default {
-  install(vue, { skip = false, domain = 'cdn.simpleanalytics.io' }) {
-    if (skip === false) return injectScript(domain)
+  install(vue, { skip = false, domain = "scripts.simpleanalyticscdn.com" }) {
+    if (skip === false) return injectScript(domain);
 
     // If skip is promise, resolve first. With failure always inject script
-    if (isPromise(skip)) return skip.then((value) => {
-      if (value !== true) return injectScript(domain)
-      else return warn('Not sending requests because skip is active.')
-    }).catch(injectScript)
+    if (isPromise(skip))
+      return skip
+        .then((value) => {
+          if (value !== true) return injectScript(domain);
+          else return warn("Not sending requests because skip is active.");
+        })
+        .catch(injectScript);
 
     // If skip function, execute and inject when not skipping
-    if (typeof skip === 'function' && skip() !== true) return injectScript(domain)
+    if (typeof skip === "function" && skip() !== true)
+      return injectScript(domain);
 
     // Otherwise skip
-    return warn('Not sending requests because skip is active.')
-  }
-}
+    return warn("Not sending requests because skip is active.");
+  },
+};
