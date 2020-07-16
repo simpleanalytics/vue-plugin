@@ -33,3 +33,27 @@ You can also optionally specify a custom domain to bypass ad blockers. Read more
 ```js
 Vue.use(SimpleAnalytics, { domain: "api.example.com" });
 ```
+
+## Nuxt
+Since we want to 
+Create a file in your plugin folder with the name `simple-analytics.js`:
+
+```js
+// ~/plugins/simple-analytics-.js
+
+import SimpleAnalytics from "simple-analytics-vue";
+import Vue from "vue";
+
+Vue.use(SimpleAnalytics, { skip: process.env.NODE_ENV !== "production" });
+```
+
+Then on your `nuxt.config.js`, make sure to include the plugin with `ssr: false` as we only want to run it on the client:
+```js
+// nuxt.config.js
+export default {
+  plugins: [
+    { src: '~/plugins/simple-analytics.js', ssr: false }
+  ],
+}
+```
+_If you need aditional configuration options (as the ones mentioned above) you just need to apply to your plugin's contents._
