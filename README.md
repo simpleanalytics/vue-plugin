@@ -55,4 +55,4 @@ export default {
   ],
 }
 ```
-_If you need any aditional configuration options (as the ones mentioned above), you just need to apply to your plugin._
+_If you need any additional configuration options (as the ones mentioned above), you just need to apply to your plugin._
