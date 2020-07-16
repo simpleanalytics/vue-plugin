@@ -35,11 +35,10 @@ Vue.use(SimpleAnalytics, { domain: "api.example.com" });
 ```
 
 ## Nuxt
-Since we want to 
 Create a file in your plugin folder with the name `simple-analytics.js`:
 
 ```js
-// ~/plugins/simple-analytics-.js
+// ~/plugins/simple-analytics.js
 
 import SimpleAnalytics from "simple-analytics-vue";
 import Vue from "vue";
@@ -56,4 +55,4 @@ export default {
   ],
 }
 ```
-_If you need aditional configuration options (as the ones mentioned above) you just need to apply to your plugin's contents._
+_If you need any aditional configuration options (as the ones mentioned above), you just need to apply to your plugin._
