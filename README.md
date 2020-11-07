@@ -38,6 +38,20 @@ You can also optionally specify a custom domain to bypass ad blockers. Read more
 Vue.use(SimpleAnalytics, { domain: "api.example.com" });
 ```
 
+### Events
+To send an event use the globally available `saEvent` method.
+
+```js
+// ~/src/components/Comment.vue
+{
+  methods: {
+    likeComment (comment) {
+      // code to like comment
+      this.saEvent(`comment_like_${comment.id}`)
+    }
+  }
+```
+
 ## Nuxt
 Create a file in your plugin folder with the name `simple-analytics.js`:
 
