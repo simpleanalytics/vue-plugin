@@ -16,8 +16,10 @@ const injectScript = (vue, domain) => {
   el.src = "https://" + domain + "/latest.js";
   document.head.appendChild(el);
   
-  // Add a global 'saEvent' method
-  vue.prototype.saEvent = window.sa_event
+  // Add a global 'saEvent' method when the script has been loaded
+  el.onload = () => {
+    vue.prototype.saEvent = window.sa_event
+  }
 };
 
 export default {
