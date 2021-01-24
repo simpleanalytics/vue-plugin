@@ -22,8 +22,8 @@ var injectScript = function injectScript(vue, domain) {
   document.head.appendChild(el); // Add a global 'saEvent' method when the script has been loaded
 
   el.onload = function () {
-    vue.prototype.saEvent = window.sa_event; // handle event tracking on localhost
-    // we won't send events, but we need to capture them to prevent errors
+    vue.prototype.saEvent = window.sa_event; // Handle event tracking on localhost, we won't send events,
+    // but we need to capture them to prevent errors
 
     if (window.location.hostname.indexOf(".") == -1 || /^[0-9]+$/.test(window.location.hostname.replace(/\./g, ""))) {
       handleSkipOrLocalhost(vue);
@@ -51,13 +51,9 @@ var index = {
       if (value !== true) return injectScript(vue, domain);else return warn("Not sending requests because skip is active.");
     }).catch(injectScript); // If skip function, execute and inject when not skipping
 
-    if (typeof skip === "function" && skip() !== true) return injectScript(vue, domain);
+    if (typeof skip === "function" && skip() !== true) return injectScript(vue, domain); // Add event catching function to Vue prototype
 
-    if (skip) {
-      // add event catching function to Vue prototype
-      handleSkipOrLocalhost(vue);
-    } // Otherwise skip
-
+    if (skip) handleSkipOrLocalhost(vue); // Otherwise skip
 
     return warn("Not sending requests because skip is active.");
   }
