@@ -26,10 +26,16 @@ var injectScript = function injectScript(vue, domain) {
     // we won't send events, but we need to capture them to prevent errors
 
     if (window.location.hostname.indexOf(".") == -1 || /^[0-9]+$/.test(window.location.hostname.replace(/\./g, ""))) {
-      vue.prototype.saEvent = function (event) {
-        warn("".concat(event, " event captured but not sent due to localhost"));
-      };
+      handleSkipOrLocalhost(vue);
     }
+  };
+};
+
+var handleSkipOrLocalhost = function handleSkipOrLocalhost(vue) {
+  // when skip===true or script is running on localhost
+  // we need a function that logs events that would have been sent
+  vue.prototype.saEvent = function (event) {
+    warn("".concat(event, " event captured but not sent due to skip or localhost"));
   };
 };
 
@@ -45,7 +51,13 @@ var index = {
       if (value !== true) return injectScript(vue, domain);else return warn("Not sending requests because skip is active.");
     }).catch(injectScript); // If skip function, execute and inject when not skipping
 
-    if (typeof skip === "function" && skip() !== true) return injectScript(vue, domain); // Otherwise skip
+    if (typeof skip === "function" && skip() !== true) return injectScript(vue, domain);
+
+    if (skip) {
+      // add event catching function to Vue prototype
+      handleSkipOrLocalhost(vue);
+    } // Otherwise skip
+
 
     return warn("Not sending requests because skip is active.");
   }

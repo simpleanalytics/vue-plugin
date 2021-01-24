@@ -27,12 +27,18 @@ const injectScript = (vue, domain) => {
       window.location.hostname.indexOf(".") == -1 
       || /^[0-9]+$/.test(window.location.hostname.replace(/\./g, ""))
       ) {
-      vue.prototype.saEvent = function(event){
-        warn(`${event} event captured but not sent due to localhost`)
-      }
+      handleSkipOrLocalhost(vue)
     }
   }
 };
+
+const handleSkipOrLocalhost = (vue) => {
+  // when skip===true or script is running on localhost
+  // we need a function that logs events that would have been sent
+  vue.prototype.saEvent = function(event){
+    warn(`${event} event captured but not sent due to skip or localhost`)
+  }
+}
 
 export default {
   install(vue, { skip = false, domain = "scripts.simpleanalyticscdn.com" }) {
@@ -50,6 +56,11 @@ export default {
     // If skip function, execute and inject when not skipping
     if (typeof skip === "function" && skip() !== true)
       return injectScript(vue, domain);
+
+    if(skip){
+      // add event catching function to Vue prototype
+      handleSkipOrLocalhost(vue)
+    }
 
     // Otherwise skip
     return warn("Not sending requests because skip is active.");
