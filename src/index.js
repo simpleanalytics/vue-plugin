@@ -15,30 +15,29 @@ const injectScript = (vue, domain) => {
   el.async = true;
   el.src = "https://" + domain + "/latest.js";
   document.head.appendChild(el);
-  
+
   // Add a global 'saEvent' method when the script has been loaded
   el.onload = () => {
+    vue.prototype.saEvent = window.sa_event;
 
-    vue.prototype.saEvent = window.sa_event
-
-    // handle event tracking on localhost
-    // we won't send events, but we need to capture them to prevent errors
-    if(
-      window.location.hostname.indexOf(".") == -1 
-      || /^[0-9]+$/.test(window.location.hostname.replace(/\./g, ""))
-      ) {
-      handleSkipOrLocalhost(vue)
+    // Handle event tracking on localhost, we won't send events,
+    // but we need to capture them to prevent errors
+    if (
+      window.location.hostname.indexOf(".") == -1 ||
+      /^[0-9]+$/.test(window.location.hostname.replace(/\./g, ""))
+    ) {
+      handleSkipOrLocalhost(vue);
     }
-  }
+  };
 };
 
 const handleSkipOrLocalhost = (vue) => {
   // when skip===true or script is running on localhost
   // we need a function that logs events that would have been sent
-  vue.prototype.saEvent = function(event){
-    warn(`${event} event captured but not sent due to skip or localhost`)
-  }
-}
+  vue.prototype.saEvent = function(event) {
+    warn(`${event} event captured but not sent due to skip or localhost`);
+  };
+};
 
 export default {
   install(vue, { skip = false, domain = "scripts.simpleanalyticscdn.com" }) {
@@ -57,10 +56,8 @@ export default {
     if (typeof skip === "function" && skip() !== true)
       return injectScript(vue, domain);
 
-    if(skip){
-      // add event catching function to Vue prototype
-      handleSkipOrLocalhost(vue)
-    }
+    // Add event catching function to Vue prototype
+    if (skip) handleSkipOrLocalhost(vue);
 
     // Otherwise skip
     return warn("Not sending requests because skip is active.");
