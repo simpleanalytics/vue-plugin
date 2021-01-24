@@ -38,7 +38,12 @@ var index = {
       if (value !== true) return injectScript(vue, domain);else return warn("Not sending requests because skip is active.");
     }).catch(injectScript); // If skip function, execute and inject when not skipping
 
-    if (typeof skip === "function" && skip() !== true) return injectScript(vue, domain); // Otherwise skip
+    if (typeof skip === "function" && skip() !== true) return injectScript(vue, domain); // skip must be true, add event to Vue prototype to prevent errors
+
+    vue.prototype.saEvent = function (event) {
+      warn("event ".concat(event, " not tracked due to skip===true"));
+    }; // Otherwise skip
+
 
     return warn("Not sending requests because skip is active.");
   }
