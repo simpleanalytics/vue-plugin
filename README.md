@@ -51,6 +51,7 @@ To send an event use the globally available `saEvent` method.
     }
   }
 ```
+Note: Simple Analytics does not run on localhost. You can still fire events, but they will be captured and logged in the console for debugging purposes. 
 
 ## Nuxt
 Create a file in your plugin folder with the name `simple-analytics.js`:
