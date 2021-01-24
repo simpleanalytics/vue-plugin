@@ -51,9 +51,6 @@ export default {
     if (typeof skip === "function" && skip() !== true)
       return injectScript(vue, domain);
 
-    // skip must be true, add event to Vue prototype to prevent errors
-    vue.prototype.saEvent = function(event){warn(`event ${event} not tracked due to skip===true`)}
-
     // Otherwise skip
     return warn("Not sending requests because skip is active.");
   },
