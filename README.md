@@ -47,14 +47,23 @@ To send an event, inject the `saEvent` method into your Vue 3 setup script like 
 
 ```js
 // ~/src/components/Comment.vue
+
 <script setup>
-  import {inject} from 'vue' const saEvent = inject('saEvent') // send event
-  when liking a comment const likeComment = (comment) =>{" "}
-  {saEvent(`comment_like_${comment.id}`)}
+  import { inject } from 'vue'
+  
+  const saEvent = inject('saEvent')
+  
+  // e.g.: send event when liking a comment
+  const likeComment = (comment) => {
+    saEvent(`comment_like_${comment.id}`)
+  }
 </script>
 ```
 
-Note: Simple Analytics does not run on localhost. You can still fire events, but they will be captured and logged in the console for debugging purposes.
+[Read more about the Vue `inject` method here.](https://vuejs.org/guide/components/provide-inject.html#inject)
+
+> **Note: Simple Analytics does not run on localhost.**  
+> You can still fire events, but they will be captured and logged in the console for debugging purposes.
 
 ## Nuxt
 
