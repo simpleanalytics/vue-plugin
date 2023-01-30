@@ -1,5 +1,3 @@
-'use strict';
-
 /* globals document */
 
 const isPromise = (subject) =>
@@ -69,4 +67,4 @@ var index = {
   },
 };
 
-module.exports = index;
+export { index as default };
