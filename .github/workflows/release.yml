@@ -27,23 +27,23 @@ jobs:
       - name: Export package version
         id: package
         run: |
-          echo ::set-output name=package_version::`cat package.json | jq -r .version`
+          echo "package_version=`cat package.json | jq -r .version`" >> $GITHUB_ENV
         shell: bash
 
-      - run: echo ${{ steps.package.outputs.package_version }}
+      - run: echo ${{ env.package_version }}
 
       - name: Find and Replace
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "[3-9]+\\.[0-9]+\\.[0-9]+"
-          replace: ${{ steps.package.outputs.package_version }}
+          replace: ${{ env.package_version }}
           regex: true
           include: "README.md"
 
       - name: "Version bump in README.md to {{version}} [skip ci]"
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Version bump in README.md to ${{ steps.package.outputs.package_version }} [skip ci]"
+          commit_message: "Version bump in README.md to ${{ env.package_version }} [skip ci]"
           file_pattern: README.md
 
       - uses: JS-DevTools/npm-publish@v1
