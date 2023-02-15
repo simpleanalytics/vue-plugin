@@ -14,6 +14,9 @@ Just run this command to install Simple Analytics for Vue:
 npm install simple-analytics-vue
 ```
 
+> **Note: This plugin is for Vue 3 only.**  
+> If you are using Vue 2, use version 1.x.x of this package
+
 ## Import in app
 
 Import the plugin and add it to `Vue.use`. You can add a `skip` option which will define when page views should be skipped. This can be useful if you want to skip page views from yourself when developing your app.
@@ -39,39 +42,43 @@ Vue.use(SimpleAnalytics, { domain: "api.example.com" });
 ```
 
 ### Events
-To send an event use the globally available `saEvent` method.
+
+To send an event, inject the `saEvent` method into your Vue 3 setup script like so:
 
 ```js
 // ~/src/components/Comment.vue
-{
-  methods: {
-    likeComment (comment) {
-      // code to like comment
-      this.saEvent(`comment_like_${comment.id}`)
-    }
+
+<script setup>
+  import { inject } from 'vue'
+  
+  const saEvent = inject('saEvent')
+  
+  // e.g.: send event when liking a comment
+  const likeComment = (comment) => {
+    saEvent(`comment_like_${comment.id}`)
   }
+</script>
 ```
-Note: Simple Analytics does not run on localhost. You can still fire events, but they will be captured and logged in the console for debugging purposes. 
+
+[Read more about the Vue `inject` method here.](https://vuejs.org/guide/components/provide-inject.html#inject)
+
+> **Note: Simple Analytics does not run on localhost.**  
+> You can still fire events, but they will be captured and logged in the console for debugging purposes.
 
 ## Nuxt
-Create a file in your plugin folder with the name `simple-analytics.js`:
+
+Create a Nuxt client-side plugin like so:
 
 ```js
-// ~/plugins/simple-analytics.js
+// ~/plugins/simple-analytics.client.js
 
 import SimpleAnalytics from "simple-analytics-vue";
-import Vue from "vue";
 
-Vue.use(SimpleAnalytics, { skip: process.env.NODE_ENV !== "production" });
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(SimpleAnalytics, {
+    skip: process.env.NODE_ENV !== "production",
+  });
+});
 ```
 
-Then on your `nuxt.config.js`, make sure to include the plugin with `ssr: false` as we only want to run it on the client:
-```js
-// nuxt.config.js
-export default {
-  plugins: [
-    { src: '~/plugins/simple-analytics.js', ssr: false }
-  ],
-}
-```
 _If you need any additional configuration options (as the ones mentioned above), you just need to apply to your plugin._

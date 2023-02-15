@@ -2,35 +2,33 @@
   "name": "simple-analytics-vue",
   "version": "2.0.0",
   "private": false,
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
-    "serve": "vue-cli-service serve ./src/index.js",
-    "build": "npx bili"
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/simpleanalytics/vue-plugin.git"
   },
-  "main": "./dist/index.js",
   "dependencies": {
-    "vue": "^2.6.11"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
-    "@vue/cli-service": "^4.3.1",
-    "bili": "^5.0.5",
-    "rollup-plugin-vue": "^5.1.6",
-    "vue-template-compiler": "^2.6.11"
+    "rollup": "^3.12.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-vue": "^6.0.0"
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+  "peerDependencies": {
+    "vue": "^3.0.0"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "files": [
-    "dist/*"
   ]
 }
