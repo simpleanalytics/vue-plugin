@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /* globals document */
 
@@ -28,8 +28,7 @@ const injectScript = (app, domain) => {
       window.location.hostname.indexOf(".") == -1 ||
       /^[0-9]+$/.test(window.location.hostname.replace(/\./g, ""))
     ) {
-      // handleSkipOrLocalhost(app);
-      app.provide("saEvent", window.sa_event);
+      handleSkipOrLocalhost(app);
     } else {
       app.provide("saEvent", window.sa_event);
     }
