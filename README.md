@@ -4,18 +4,23 @@
 
 # Vue plugin
 
-[Simple Analytics](https://simpleanalytics.com) is a clean, simple, and privacy friendly analytics tool. Actionable data in a beautiful dashboard. It does not use cookies and you can bypass ad blockers. Make sure to signup to get most value out of this plugin.
+[Simple Analytics](https://www.simpleanalytics.com/) is a clean, simple, and privacy-first analytics tool. Actionable data in a beautiful dashboard. It does not use cookies and you can bypass ad-blockers. Make sure to signup to get the most value out of this plugin.
 
 ## Install
 
-Just run this command to install Simple Analytics for Vue:
+We support Vue 3 and Vue 2.
+
+### Vue 3
+
+Just run this command to install Simple Analytics for Vue 3:
 
 ```bash
-npm install simple-analytics-vue
+npm install simple-analytics-vue@3.0.0 --save
 ```
 
-> **Note: This plugin is for Vue 3 only.**  
-> If you are using Vue 2, use version 1.x.x of this package
+### Vue 2
+
+If you are using Vue 2, use version 2.0.0 of this package. It will not get any updates. Install it with `npm install simple-analytics-vue@2.0.0 --save`.
 
 ## Import in app
 
@@ -49,14 +54,9 @@ To send an event, inject the `saEvent` method into your Vue 3 setup script like 
 // ~/src/components/Comment.vue
 
 <script setup>
-  import { inject } from 'vue'
-  
-  const saEvent = inject('saEvent')
-  
-  // e.g.: send event when liking a comment
-  const likeComment = (comment) => {
-    saEvent(`comment_like_${comment.id}`)
-  }
+  import {inject} from 'vue' const saEvent = inject('saEvent') // e.g.: send
+  event when liking a comment const likeComment = (comment) =>{" "}
+  {saEvent(`comment_like_${comment.id}`)}
 </script>
 ```
 

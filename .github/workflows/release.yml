@@ -1,0 +1,70 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: "Automated version bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          default: patch
+          commit-message: "Version bump to {{version}} [skip ci]"
+          tag-prefix: "v"
+
+      - name: Export package version
+        id: package
+        run: |
+          echo ::set-output name=package_version::`cat package.json | jq -r .version`
+        shell: bash
+
+      - run: echo ${{ steps.package.outputs.package_version }}
+
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "[3-9]+\\.[0-9]+\\.[0-9]+"
+          replace: ${{ steps.package.outputs.package_version }}
+          regex: true
+          include: "README.md"
+
+      - name: "Version bump in README.md to {{version}} [skip ci]"
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Version bump in README.md to ${{ steps.package.outputs.package_version }} [skip ci]"
+          file_pattern: README.md
+
+      - uses: JS-DevTools/npm-publish@v1
+        id: publish
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          check-version: true
+          dry-run: false
+          access: "public"
+
+      - if: steps.publish.outputs.type != 'none'
+        run: |
+          echo "Version changed: ${{ steps.publish.outputs.old-version }} => ${{ steps.publish.outputs.version }}"
+      - name: Create new release
+        if: steps.publish.outputs.type != 'none'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: "v${{ steps.publish.outputs.version }}"
+          release_name: "v${{ steps.publish.outputs.version }}"
+          draft: false
+          prerelease: false
