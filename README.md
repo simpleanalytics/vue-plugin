@@ -50,13 +50,18 @@ Vue.use(SimpleAnalytics, { domain: "api.example.com" });
 
 To send an event, inject the `saEvent` method into your Vue 3 setup script like so:
 
-```js
+```vue
 // ~/src/components/Comment.vue
 
 <script setup>
-  import {inject} from 'vue' const saEvent = inject('saEvent') // e.g.: send
-  event when liking a comment const likeComment = (comment) =>{" "}
-  {saEvent(`comment_like_${comment.id}`)}
+import { inject } from "vue";
+
+const saEvent = inject("saEvent");
+
+// e.g.: send event when liking a comment
+const likeComment = (comment) => {
+  saEvent(`comment_like_${comment.id}`);
+};
 </script>
 ```
 
