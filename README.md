@@ -20,7 +20,7 @@ npm install simple-analytics-vue@3.0.1 --save
 
 ### Vue 2
 
-If you are using Vue 2, use version 2.0.0 of this package. It will not get any updates. Install it with `npm install simple-analytics-vue@2.0.0 --save`.
+If you are using Vue 2, use version 2.x of this package. It will not get any updates. Install it with `npm install simple-analytics-vue@2.x --save`.
 
 ## Import in app
 
