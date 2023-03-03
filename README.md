@@ -15,7 +15,7 @@ We support Vue 3 and Vue 2.
 Just run this command to install Simple Analytics for Vue 3:
 
 ```bash
-npm install simple-analytics-vue@3.0.1 --save
+npm install simple-analytics-vue@3.0.2 --save
 ```
 
 ### Vue 2
