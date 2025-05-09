@@ -6,10 +6,13 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "files": [
-    "dist/*"
+    "dist/*",
+    "types/*"
   ],
+  "types": "types/index.d.ts",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepare-types": "cp types/index.d.ts dist/"
   },
   "repository": {
     "type": "git",
