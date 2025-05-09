@@ -1,0 +1,8 @@
+{
+    "name": "@types/simple-analytics-vue",
+    "version": "3.0.2",
+    "types": "index.d.ts",
+    "dependencies": {
+      "vue": "^3.0.0"
+    }
+  }
