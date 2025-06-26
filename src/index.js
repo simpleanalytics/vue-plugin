@@ -1,4 +1,5 @@
 /* globals document */
+export const saEventKey = Symbol('saEvent');
 
 const isPromise = (subject) =>
   subject && subject.then && typeof subject.then == "function";
