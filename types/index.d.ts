@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue'
+import type { App, Plugin, InjectionKey } from 'vue'
 
 declare global {
   interface Window {
@@ -11,16 +11,17 @@ export interface SimpleAnalyticsOptions {
   domain?: string;
 }
 
+export declare const saEventKey: InjectionKey<(event: string) => void>;
+
 type SimpleAnalyticsPlugin = Plugin & {
   install(app: App, options?: SimpleAnalyticsOptions): void;
 }
 
 declare const SimpleAnalytics: SimpleAnalyticsPlugin;
-
 export default SimpleAnalytics;
 
 declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $saEvent?: (event: string) => void;
+  interface InjectionKeys {
+    saEvent: (event: string) => void;
   }
 }
