@@ -1,4 +1,5 @@
 /* globals document */
+const saEventKey = Symbol('saEvent');
 
 const isPromise = (subject) =>
   subject && subject.then && typeof subject.then == "function";
@@ -66,4 +67,4 @@ var index = {
   },
 };
 
-export { index as default };
+export { index as default, saEventKey };

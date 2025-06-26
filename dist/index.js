@@ -1,6 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 /* globals document */
+const saEventKey = Symbol('saEvent');
 
 const isPromise = (subject) =>
   subject && subject.then && typeof subject.then == "function";
@@ -68,4 +71,5 @@ var index = {
   },
 };
 
-module.exports = index;
+exports.default = index;
+exports.saEventKey = saEventKey;
