@@ -55,8 +55,9 @@ To send an event, inject the `saEvent` method into your Vue 3 setup script like 
 
 <script setup>
 import { inject } from "vue";
+import { saEventKey } from 'simple-analytics-vue';
 
-const saEvent = inject("saEvent");
+const saEvent = inject(saEventKey);
 
 // e.g.: send event when liking a comment
 const likeComment = (comment) => {
