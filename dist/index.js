@@ -5,6 +5,27 @@ Object.defineProperty(exports, '__esModule', { value: true });
 /* globals document */
 const saEventKey = Symbol('saEvent');
 
+function parseOptions(options) {
+  const metrics = options.ignoreMetrics
+    ? Object.entries(options.ignoreMetrics)
+        .filter(([_, value]) => value)
+        .map(([key]) => `${key}`)
+        .join(",")
+    : undefined;
+
+  return {
+    "data-auto-collect": options.autoCollect,
+    "data-collect-dnt": options.collectDnt,
+    "data-hostname": options.hostname,
+    "data-mode": options.mode,
+    "data-ignore-metrics": metrics === "" ? undefined : metrics,
+    "data-ignore-pages": options.ignorePages?.join(","),
+    "data-allow-params": options.allowParams?.join(","),
+    "data-non-unique-params": options.nonUniqueParams?.join(","),
+    "data-strict-utm": options.strictUtm,
+  };
+}
+
 const isPromise = (subject) =>
   subject && subject.then && typeof subject.then == "function";
 
@@ -13,7 +34,7 @@ const warn = (message) => {
     console.warn("Simple Analytics: " + message || "Something goes wrong.");
 };
 
-const injectScript = (app, domain) => {
+const injectScript = (app, domain, options) => {
   if (typeof document === "undefined") return warn("No document defined.");
   if (document.getElementById("sa-script")) return; // Script already loaded
   const el = document.createElement("script");
@@ -21,6 +42,10 @@ const injectScript = (app, domain) => {
   el.type = "text/javascript";
   el.async = true;
   el.src = "https://" + domain + "/latest.js";
+  const attributes = parseOptions(options);
+  Object.entries(attributes).forEach(([key, value]) => {
+    if (value) el.setAttribute(key, value);
+  });
   document.head.appendChild(el);
 
   // Add a global 'saEvent' method when the script has been loaded
@@ -47,21 +72,21 @@ const handleSkipOrLocalhost = (app) => {
 };
 
 var index = {
-  install(app, { skip = false, domain = "scripts.simpleanalyticscdn.com" }) {
-    if (skip === false) return injectScript(app, domain);
+  install(app, { skip = false, domain = "scripts.simpleanalyticscdn.com", ...options }) {
+    if (skip === false) return injectScript(app, domain, options);
 
     // If skip is promise, resolve first. With failure always inject script
     if (isPromise(skip))
       return skip
         .then((value) => {
-          if (value !== true) return injectScript(app, domain);
+          if (value !== true) return injectScript(app, domain, options);
           else return warn("Not sending requests because skip is active.");
         })
-        .catch(injectScript);
+        .catch(injectScript(app, domain, options));
 
     // If skip function, execute and inject when not skipping
     if (typeof skip === "function" && skip() !== true)
-      return injectScript(app, domain);
+      return injectScript(app, domain, options);
 
     // Add event catching function to Vue prototype
     if (skip) handleSkipOrLocalhost(app);
@@ -72,4 +97,5 @@ var index = {
 };
 
 exports.default = index;
+exports.parseOptions = parseOptions;
 exports.saEventKey = saEventKey;
