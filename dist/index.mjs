@@ -39,9 +39,10 @@ const injectScript = (app, domain, options) => {
   el.async = true;
   el.src = "https://" + domain + "/latest.js";
   const attributes = parseOptions(options);
-  Object.entries(attributes).forEach(([key, value]) => {
+  for (const key in attributes) {
+    const value = attributes[key];
     if (value) el.setAttribute(key, value);
-  });
+  }
   document.head.appendChild(el);
 
   // Add a global 'saEvent' method when the script has been loaded
@@ -92,4 +93,4 @@ var index = {
   },
 };
 
-export { index as default, parseOptions, saEventKey };
+export { index as default, saEventKey };
