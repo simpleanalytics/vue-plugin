@@ -1,7 +1,7 @@
 /* globals document */
 export const saEventKey = Symbol('saEvent');
 
-export function parseOptions(options) {
+function parseOptions(options) {
   const metrics = options.ignoreMetrics
     ? Object.entries(options.ignoreMetrics)
         .filter(([_, value]) => value)
