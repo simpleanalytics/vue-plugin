@@ -22,7 +22,7 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "rollup": "^3.12.0",
+    "rollup": "^3.29.5",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-vue": "^6.0.0"
   },
